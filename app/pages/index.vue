@@ -121,26 +121,37 @@
       <UContainer>
         <h2 class="section-title">Meet Your Resident Experts</h2>
         <p class="text-xl mb-12 max-w-3xl">
-          Get direct help from these experienced creators in our community
+          Get direct help from these experienced creators in our community.
         </p>
 
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
-          <div v-for="expert in experts" :key="expert.name" class="">
-            <div
-              class="h-32 w-32 rounded-full bg-secondary-200 mb-4 overflow-hidden flex items-center justify-center"
-            >
-              <img
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6"
+        >
+          <div
+            v-for="expert in experts"
+            :key="expert.name"
+            class="bg-secondary-100 rounded-xl overflow-hidden border border-secondary-300 text-center flex flex-col items-center"
+          >
+            <div class="w-full mb-4 flex items-center justify-center pt-4">
+              <UAvatar
                 v-if="expert.avatar"
                 :src="expert.avatar"
                 :alt="expert.name"
-                class="h-full w-full object-cover"
+                size="xl"
+                class="h-20 w-20"
               />
-              <span v-else class="text-4xl font-bold">{{
-                expert.name.charAt(0)
-              }}</span>
+              <UAvatar v-else :alt="expert.name" size="xl" class="h-20 w-20">
+                {{ expert.name.charAt(0) }}
+              </UAvatar>
             </div>
-            <h3 class="font-bold text-lg">{{ expert.name }}</h3>
-            <p class="text-sm">{{ expert.expertise }}</p>
+            <div class="pb-4">
+              <h3 class="font-bold text-xl text-secondary-950">
+                {{ expert.name }}
+              </h3>
+              <p class="text-md text-secondary-700 mt-1">
+                {{ expert.expertise }}
+              </p>
+            </div>
           </div>
         </div>
       </UContainer>
@@ -151,18 +162,20 @@
       <UContainer>
         <h2 class="section-title">
           Access Our Library of
-          <span class="bg-primary-200 px-2">{{ courses.length }}+ Courses</span>
+          <span class="bg-primary-200 font-bold px-2"
+            >{{ courses.length }}+ Courses</span
+          >
         </h2>
         <p class="text-xl mb-12 max-w-3xl">
           From building media businesses to mastering AI tools, our library has
-          everything you need to start and grow your small bets
+          everything you need to start and grow your small bets.
         </p>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
           <div
             v-for="(course, index) in displayedCourses"
             :key="index"
-            class="bg-gray-300/50 text-black p-2 rounded-lg flex items-center gap-1"
+            class="bg-secondary-100/70 ring-2 ring-secondary-400 text-black p-2 rounded-lg flex items-center gap-1"
           >
             <UIcon name="i-heroicons-chevron-right-16-solid" class="text-lg" />
             <p class="font-medium text-secondary-900">{{ course }}</p>
@@ -183,25 +196,31 @@
       </UContainer>
     </section>
 
-    <!-- Pricing / Lifetime Membership Section -->
-    <section class="py-16 md:py-24 bg-white">
-      <UContainer>
-        <div class="max-w-3xl">
-          <h2 class="text-3xl lg:text-4xl font-serif font-bold mb-4">
-            One-Time Payment,
-            <span class="bg-primary-100 px-2">Lifetime Access</span>
-          </h2>
-          <p class="text-xl mb-12 text-secondary-700">
-            No monthly fees, no upsells, just pure value that keeps growing.
-          </p>
+    <div class="h-12 bg-transparent relative">
+      <div
+        class="h-30 w-[120vw] bg-fall-50 -left-20 -top-5 border-t border-fall-200 absolute -rotate-3"
+      ></div>
+    </div>
 
+    <!-- Pricing / Lifetime Membership Section -->
+    <section class="py-16 md:py-24 bg-fall-50">
+      <UContainer>
+        <h2 class="section-title">
+          One-Time Payment,
+          <span class="bg-fall-200 font-bold px-2">Lifetime Access</span>
+        </h2>
+        <p class="text-xl mb-12">
+          No monthly fees, no upsells, just pure value that keeps growing.
+        </p>
+
+        <div class="max-w-2xl">
           <div
             class="bg-secondary-50 rounded-2xl overflow-hidden ring-2 ring-secondary-300"
           >
             <div class="border-b-2 border-secondary-300 py-6 px-8">
               <h3 class="text-2xl font-bold">Small Bets Lifetime Membership</h3>
               <div class="mt-2 mb-1 text-4xl font-bold">$129</div>
-              <p class="text-secondary-700">One-time payment.</p>
+              <p class="">One-time payment.</p>
             </div>
 
             <div class="p-8">
@@ -220,7 +239,6 @@
                 <UButton
                   :to="joinNow"
                   size="xl"
-                  color="secondary"
                   variant="subtle"
                   class="w-full hover:ring-2 md:w-auto font-bold py-4 px-8 text-lg"
                   trailing-icon="i-heroicons-arrow-right-16-solid"
@@ -238,14 +256,14 @@
     </section>
 
     <!-- Footer -->
-    <footer class="py-4 bg-white">
+    <footer class="py-4 bg-fall-50">
       <UContainer>
         <div class="flex flex-col md:flex-row items-center justify-between">
           <div class="flex items-center gap-2 mb-4 md:mb-0">
             <img class="rounded-lg h-8" src="/logo.jpg" />
             <span class="font-logo text-xl font-bold">Small Bets</span>
           </div>
-          <div class="text-secondary-950">
+          <div class="text-fall-950">
             © {{ new Date().getFullYear() }} Small Bets — Make money without
             risking it all
           </div>
@@ -497,52 +515,52 @@ const experts = [
   {
     name: "Daniel Vassallo",
     expertise: "Small Bets Strategy",
-    avatar: "/experts/daniel.jpg",
+    avatar: "https://i.pravatar.cc/300?img=1",
   },
   {
     name: "Arvid Kahl",
     expertise: "Media Business",
-    avatar: "/experts/arvid.jpg",
+    avatar: "https://i.pravatar.cc/300?img=12",
   },
   {
     name: "Jordan O'Connor",
     expertise: "SEO Specialist",
-    avatar: "/experts/jordan.jpg",
+    avatar: "https://i.pravatar.cc/300?img=33",
   },
   {
     name: "Monica Lim",
     expertise: "Notion Expert",
-    avatar: "/experts/monica.jpg",
+    avatar: "https://i.pravatar.cc/300?img=25",
   },
   {
     name: "Sahil Lavingia",
     expertise: "Crowdfunding",
-    avatar: "/experts/sahil.jpg",
+    avatar: "https://i.pravatar.cc/300?img=68",
   },
   {
     name: "Espree Devora",
     expertise: "Podcasting",
-    avatar: "/experts/espree.jpg",
+    avatar: "https://i.pravatar.cc/300?img=48",
   },
   {
     name: "Steph Smith",
     expertise: "Internet Marketing",
-    avatar: "/experts/steph.jpg",
+    avatar: "https://i.pravatar.cc/300?img=29",
   },
   {
     name: "Hassan Osman",
     expertise: "Course Creation",
-    avatar: "/experts/hassan.jpg",
+    avatar: "https://i.pravatar.cc/300?img=53",
   },
   {
     name: "Sairam Sundaresan",
     expertise: "AI & GPT",
-    avatar: "/experts/sairam.jpg",
+    avatar: "https://i.pravatar.cc/300?img=63",
   },
   {
     name: "Peter Askew",
     expertise: "Domain Development",
-    avatar: "/experts/peter.jpg",
+    avatar: "https://i.pravatar.cc/300?img=15",
   },
 ];
 
