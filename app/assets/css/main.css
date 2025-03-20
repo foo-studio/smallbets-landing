@@ -1,6 +1,11 @@
 @import "tailwindcss" theme(static);
 @import "@nuxt/ui";
 
+.highlight {
+  color: var(--color-amaranth-600);
+  font-weight: 600;
+}
+
 @theme static {
   --font-serif: "Manrope", serif;
   --font-sans: "Parkinsans", sans-serif;

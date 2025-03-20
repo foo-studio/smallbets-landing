@@ -1,11 +1,34 @@
 <template>
-  <div class="w-screen h-screen bg-fall-50">
-    <UContainer>
-      <div class="flex py-4 items-center gap-2">
-        <NuxtImg class="rounded-lg h-8" src="/logo.jpg" />
-        <span class="font-serif">Small Bets</span>
-      </div>
-    </UContainer>
+  <div class="min-h-screen bg-fall-50">
+    <!-- Navigation Bar -->
+    <header class="border-b border-fall-200">
+      <UContainer>
+        <div class="flex py-4 items-center justify-between">
+          <div class="flex items-center gap-2">
+            <NuxtImg class="rounded-lg h-8" src="/logo.jpg" />
+            <span class="font-serif text-lg">Small Bets</span>
+          </div>
+          <UButton color="amaranth" variant="ghost" class="font-medium">Sign In</UButton>
+        </div>
+      </UContainer>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="py-16 md:py-24">
+      <UContainer>
+        <div class="max-w-3xl mx-auto text-center">
+          <h1 class="text-4xl md:text-5xl font-bold mb-6 text-fall-900">Start Small</h1>
+          <p class="text-xl md:text-2xl mb-8 text-fall-800 leading-relaxed">
+            Forget about "starting a company." Try making $1,000 with a small
+            project first. When you join Small Bets you'll find a support network
+            ready to help you get your first small wins.
+          </p>
+          <UButton size="xl" color="amaranth" class="font-bold text-lg px-8">Join Now</UButton>
+        </div>
+      </UContainer>
+    </section>
+
+    <!-- Rest of the content can go here -->
   </div>
 </template>
 
