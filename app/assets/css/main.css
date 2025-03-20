@@ -5,3 +5,95 @@
   --font-serif: "Lora", serif;
   --font-sans: "Montserrat", sans-serif;
 }
+
+:root {
+  --color-dark: #0A0506;
+  --color-red: #E74150;
+  --color-teal: #3CA6B6;
+  --color-cream: #EBE6BE;
+}
+
+.bg-dark { background-color: var(--color-dark); }
+.bg-red { background-color: var(--color-red); }
+.bg-teal { background-color: var(--color-teal); }
+.bg-cream { background-color: var(--color-cream); }
+
+.text-dark { color: var(--color-dark); }
+.text-red { color: var(--color-red); }
+.text-teal { color: var(--color-teal); }
+.text-cream { color: var(--color-cream); }
+
+.border-dark { border-color: var(--color-dark); }
+.border-red { border-color: var(--color-red); }
+.border-teal { border-color: var(--color-teal); }
+.border-cream { border-color: var(--color-cream); }
+
+.hero-section {
+  background-color: var(--color-dark);
+  color: white;
+  padding: 4rem 0;
+}
+
+.section-divider {
+  height: 2px;
+  background-color: var(--color-teal);
+  margin: 3rem 0;
+}
+
+.cta-button {
+  background-color: var(--color-red);
+  color: white;
+  font-weight: bold;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(231, 65, 80, 0.3);
+}
+
+.secondary-button {
+  background-color: var(--color-teal);
+  color: white;
+  font-weight: bold;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.secondary-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(60, 166, 182, 0.3);
+}
+
+.expert-card {
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.expert-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.testimonial {
+  background-color: var(--color-cream);
+  border-left: 4px solid var(--color-teal);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+
+.highlight {
+  background-color: var(--color-cream);
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-weight: bold;
+}
