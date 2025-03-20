@@ -1,14 +1,20 @@
 <template>
-  <div class="min-h-screen bg-fall-50">
+  <div class="min-h-screen bg-cod-50 overflow-x-hidden">
     <!-- Navigation Bar -->
-    <header class="border-b border-fall-200">
+    <header>
       <UContainer>
         <div class="flex py-4 items-center justify-between">
           <div class="flex items-center gap-2">
-            <NuxtImg class="rounded-lg h-8" src="/logo.jpg" />
-            <span class="font-serif text-lg">Small Bets</span>
+            <img class="rounded-lg h-8" src="/logo.jpg" />
+            <span class="font-logo text-xl font-bold">Small Bets</span>
           </div>
-          <UButton color="amaranth" variant="ghost" class="font-medium">Sign In</UButton>
+          <UButton
+            size="xl"
+            class="px-0 hover:underline"
+            :to="signIn"
+            variant="link"
+            >Sign In</UButton
+          >
         </div>
       </UContainer>
     </header>
@@ -16,19 +22,236 @@
     <!-- Hero Section -->
     <section class="py-16 md:py-24">
       <UContainer>
-        <div class="max-w-3xl mx-auto text-center">
-          <h1 class="text-4xl md:text-5xl font-bold mb-6 text-fall-900">Start Small</h1>
-          <p class="text-xl md:text-2xl mb-8 text-fall-800 leading-relaxed">
-            Forget about "starting a company." Try making $1,000 with a small
-            project first. When you join Small Bets you'll find a support network
-            ready to help you get your first small wins.
+        <h1
+          class="text-4xl md:text-5xl xl:text-7xl uppercase font-serif font-medium mb-6 text-black"
+        >
+          Start Small
+        </h1>
+        <div
+          class="text-xl md:text-2xl lg:text-3xl mb-8 text-black leading-relaxed space-y-4"
+        >
+          <p>Forget about "starting a company."</p>
+          <p>Try making $1,000 with a small project first.</p>
+          <p>
+            When you join Small Bets you'll find a support network ready to help
+            you get your first small wins.
           </p>
-          <UButton size="xl" color="amaranth" class="font-bold text-lg px-8">Join Now</UButton>
+        </div>
+        <UButton
+          :to="joinNow"
+          size="xl"
+          class="hover:ring-3 hover:ring-primary-950 hover:bg-primary-500 uppercase font-bold text-lg px-8"
+          >Join Now</UButton
+        >
+      </UContainer>
+    </section>
+
+    <div class="h-12 bg-transparent relative">
+      <div
+        class="h-25 w-[120vw] bg-secondary-50 -left-20 top-0 border-t border-secondary-200 absolute -rotate-3"
+      ></div>
+    </div>
+
+    <!-- Testimonials -->
+    <section class="pt-20 pb-40 bg-secondary-50">
+      <UContainer class="relative">
+        <h2 class="section-title">What Our Members Say</h2>
+        <div
+          :class="[
+            showAllTestimonials
+              ? 'max-h-[8000px] md:max-h-[6000px] lg:max-h-[4000px]'
+              : 'max-h-[1200px] md:max-h-[1000px] lg:max-h-[800px]',
+            'overflow-hidden transition-[max-height] duration-500',
+          ]"
+        >
+          <div class="md:columns-2 lg:columns-3 gap-14 space-y-8">
+            <div
+              v-for="(testimonial, index) in testimonials"
+              :key="index"
+              class="break-inside-avoid space-y-2 py-4"
+            >
+              <p
+                class="font-medium text-lg md:text-2xl"
+                v-html="formatTestimonial(testimonial.quote)"
+              ></p>
+              <p class="text-gray-700 font-bold text-lg">
+                — {{ testimonial.name }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div
+          v-if="!showAllTestimonials"
+          :class="[
+            'mt-8 text-center w-full py-4',
+            !showAllTestimonials &&
+              '-bottom-10 h-30 left-0 z-10 absolute bg-white/2 backdrop-blur-xs',
+          ]"
+        >
+          <UButton
+            variant="subtle"
+            size="lg"
+            class="bg-primary-100/80 hover:bg-primary-100/70 hover:ring-2 cursor-pointer font-medium px-6"
+            @click="toggleShowAllTestimonials"
+          >
+            {{
+              showAllTestimonials
+                ? "Show Less Testimonials"
+                : "Show More Testimonials"
+            }}
+          </UButton>
         </div>
       </UContainer>
     </section>
 
-    <!-- Rest of the content can go here -->
+    <!-- <div class="h-12 bg-transparent relative"> -->
+    <!--   <div -->
+    <!--     class="h-26 w-[110vw] bg-cod-50 -left-10 -top-14 border-t border-cod-200 absolute rotate-3" -->
+    <!--   ></div> -->
+    <!-- </div> -->
+    <div class="h-12 bg-transparent relative">
+      <div
+        class="h-30 w-[120vw] bg-cod-50 -left-20 -top-15 border-t border-cod-200 absolute -rotate-3"
+      ></div>
+    </div>
+
+    <!-- Resident Experts Section -->
+    <section class="pt-12 pb-16 bg-cod-50">
+      <UContainer>
+        <h2 class="section-title">Meet Your Resident Experts</h2>
+        <p class="text-xl mb-12 max-w-3xl">
+          Get direct help from these experienced creators in our community
+        </p>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+          <div v-for="expert in experts" :key="expert.name" class="">
+            <div
+              class="h-32 w-32 rounded-full bg-secondary-200 mb-4 overflow-hidden flex items-center justify-center"
+            >
+              <img
+                v-if="expert.avatar"
+                :src="expert.avatar"
+                :alt="expert.name"
+                class="h-full w-full object-cover"
+              />
+              <span v-else class="text-4xl font-bold">{{
+                expert.name.charAt(0)
+              }}</span>
+            </div>
+            <h3 class="font-bold text-lg">{{ expert.name }}</h3>
+            <p class="text-sm">{{ expert.expertise }}</p>
+          </div>
+        </div>
+      </UContainer>
+    </section>
+
+    <!-- Library Section -->
+    <section class="py-16 md:py-24">
+      <UContainer>
+        <h2 class="section-title">
+          Access Our Library of
+          <span class="bg-primary-200 px-2">{{ courses.length }}+ Courses</span>
+        </h2>
+        <p class="text-xl mb-12 max-w-3xl">
+          From building media businesses to mastering AI tools, our library has
+          everything you need to start and grow your small bets
+        </p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
+          <div
+            v-for="(course, index) in displayedCourses"
+            :key="index"
+            class="bg-gray-300/50 text-black p-2 rounded-lg flex items-center gap-1"
+          >
+            <UIcon name="i-heroicons-chevron-right-16-solid" class="text-lg" />
+            <p class="font-medium text-secondary-900">{{ course }}</p>
+          </div>
+        </div>
+
+        <div v-if="!showAllCourses" class="py-4">
+          <UButton
+            variant="link"
+            color="secondary"
+            size="lg"
+            class="px-0 cursor-pointer underline font-medium"
+            @click="toggleShowAllCourses"
+          >
+            {{ showAllCourses ? "Show Less Courses" : "Show All Courses" }}
+          </UButton>
+        </div>
+      </UContainer>
+    </section>
+
+    <!-- Pricing / Lifetime Membership Section -->
+    <section class="py-16 md:py-24 bg-white">
+      <UContainer>
+        <div class="max-w-3xl">
+          <h2 class="text-3xl lg:text-4xl font-serif font-bold mb-4">
+            One-Time Payment,
+            <span class="bg-primary-100 px-2">Lifetime Access</span>
+          </h2>
+          <p class="text-xl mb-12 text-secondary-700">
+            No monthly fees, no upsells, just pure value that keeps growing.
+          </p>
+
+          <div
+            class="bg-secondary-50 rounded-2xl overflow-hidden ring-2 ring-secondary-300"
+          >
+            <div class="border-b-2 border-secondary-300 py-6 px-8">
+              <h3 class="text-2xl font-bold">Small Bets Lifetime Membership</h3>
+              <div class="mt-2 mb-1 text-4xl font-bold">$129</div>
+              <p class="text-secondary-700">One-time payment.</p>
+            </div>
+
+            <div class="p-8">
+              <ul class="space-y-4 text-secondary-600">
+                <li
+                  v-for="(benefit, index) in benefits"
+                  :key="index"
+                  class="flex items-center gap-2"
+                >
+                  <UIcon class="text-2xl" name="i-heroicons-check-circle" />
+                  <span class="text-lg">{{ benefit }}</span>
+                </li>
+              </ul>
+
+              <div class="mt-8">
+                <UButton
+                  :to="joinNow"
+                  size="xl"
+                  color="secondary"
+                  variant="subtle"
+                  class="w-full hover:ring-2 md:w-auto font-bold py-4 px-8 text-lg"
+                  trailing-icon="i-heroicons-arrow-right-16-solid"
+                >
+                  Join Small Bets Now
+                </UButton>
+                <p class="mt-4 text-sm text-secondary-700">
+                  Join {{ members }} other members building small bets.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </UContainer>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-4 bg-white">
+      <UContainer>
+        <div class="flex flex-col md:flex-row items-center justify-between">
+          <div class="flex items-center gap-2 mb-4 md:mb-0">
+            <img class="rounded-lg h-8" src="/logo.jpg" />
+            <span class="font-logo text-xl font-bold">Small Bets</span>
+          </div>
+          <div class="text-secondary-950">
+            © {{ new Date().getFullYear() }} Small Bets — Make money without
+            risking it all
+          </div>
+        </div>
+      </UContainer>
+    </footer>
   </div>
 </template>
 
@@ -37,7 +260,10 @@ definePageMeta({
   colorMode: "light",
 });
 
-const showMoreTestimonials = ref(false);
+const { signIn, joinNow } = useAppConfig().links;
+
+// TODO: fetch this with an API?
+const members = 6650;
 
 const courses = [
   "Building a Media Business - Arvid Kahl",
@@ -93,63 +319,241 @@ const courses = [
 ];
 
 const testimonials = [
-  "Arvid Kahl: \"This isn't just an **amazing community** for eager founders to learn in; it's also an expression of Daniel's expansive teaching mindset. Allowing people to teach themselves by re-living your past lectures is an active act of empowering those who already have an overflowing schedule.\"",
-  'Florin Pop: "There are **tons of webinars with amazing people**, and the community is full of amazing people."',
-  'Tony Dinh: "Small Bets is **the most active server** on my Discord!"',
-  'Espree Devora: "Small Bets is the most high value engaged helpful business community on the internet. We pay a one time small fee for life time access to **quality connections and impactful education that transforms** our lives."',
-  'Kenny Liu: "I just finished the Small Bets lecture about Upwork with @SeanODowd15. **Countless gems for takeaway!** @dvassallo and his team continue to provide real value for the Small Bets community. So glad I signed up!"',
-  'Ergest Xheblati: "Honestly the best community I\'ve been a part of in the last 10 years"',
-  'Aprilynne Alter: "I can easily say that the Small Bets community has been **one of the most engaged groups of people** I\'ve had the pleasure of teaching! Great community there."',
-  'Hassan Osman: "This course by @dvassallo will show you: How to think about starting a business; How to reduce the risk of failure; How to use randomness to your advantage. **Truly one of the best courses I\'ve taken**."',
-  'Dan Rowden: "The Discord is **full of amazing makers**. It\'s like a curated group of the best from Twitter, plus more interaction and value."',
-  'Vic Vijayakumar: "You get an active community Discord, lots of guest lectures (with recordings), tons of freebies (and/or discounts to various saas / ebooks / courses), and in my case I also **made some very good friends**."',
-  "Monica Lim: \"You don't need another course but this by @dvassallo legit freed me from self-sabotage and procrastination. It's **value dense**, affordable and the community is still small and quite active.\"",
-  'Manny de Souza: "By far, the best content I consumed about entrepreneurship and lifestyle. It is amazing to be **among of so many like minded people**."',
-  'Jeffrey Guenther: "**Absolutely worth the price** of admission. It\'s like having access to a bunch of paid courses."',
-  "Ankur Tyagi: \"If you're looking for an awesome community. If you're trying small bets and need **genuine feedback**. If you need to understand how randomness played a big role in your life. This is for you.\"",
-  'Jeremy Smith: "Daniel is solidifying many concepts I had some intuition/pattern matching for, but couldn\'t yet articulate. **Highly recommended**!"',
-  'George McEntegart: "A community that **keeps giving value again and again**."',
-  'Ankita Kulkarni: "**Highly recommend it**, you start thinking in small bets vs taking on huge projects which cost you time and money!"',
-  'Rafael Rinaldi: "This community truly is **the gift that keeps on giving**."',
-  'Jordan Davis: "Very few one-time purchases continue to add more and **more value over time** like this."',
-  'Brock Briggs: "The community is **absolutely invaluable**."',
-  'Brandon Fearing: "Joined @dvassallo small bets community yesterday and the guest lecture recordings are 100%. Found @searchbound\'s domain first development **super intriguing**. Maybe now I can put my 40+ unused domains to use!"',
-  'Hugo Hamel: "It is so **refreshing and inspiring** to be part of the Small Bets community. It might be bad for the economy, but it\'s extremely healing in many ways to experience. Truly a beautiful community!"',
-  'Nick Hammond: "Love being able to go back into the recordings on my own time. Appreciate **all of the info you\'ve collected in one place**!"',
-  'Angad Singi: "Being a part of smallbets.co, I love the community. The instant feedback, **quality conversations**, and exploring possibilities of digital business is superb."',
-  'Corey Wilks: "Shared the same wins in a few communities recently. **Nothing beats the supportiveness** of the Small Bets community."',
-  'Shivam Dewan: "smallbets.co is my **new idea generator**. If you need inspiration and a supportive community, this is the place to be. Been into so many discord groups but only this one I actually participate in."',
-  'Travis Hayes: "Highly recommend looking into Daniel\'s small bets community. As a new active twitter user, I often have a ton of questions. **The community is engaged** and has been helpful."',
-  'Miche Priest: "Taking this course and joining this Discord has been an incredible learning journey. Top notch, creative, generous, engaged people coming together to figure out how to design work around life. **Makings solopreneurship not so solo**."',
-  "Enrique Benitez: \"Just finished this course by @dvassallo and it's by far **the best course I've ever taken**, Daniel explains and dissects the process of building a portfolio of small bets thoroughly, from product ideas, randomness and luck, making money and lifestyle design.\"",
-  'Jason Akinaka: "**Highly recommend** it for those who, like me, dread the 9-5 and have way too many interests to ever want to go back."',
-  "Takamichi Okubo: \"Just finished @dvassallo's awesome cohort course. It's 9+ hours of **pure informativeness and inspiration**.\"",
-  'Gaurav Singh: "For a decade, I was on a set life path. Then I decided to change it all and start from scratch. This was hard. For many months, I was lost. Till I did @dvassallo\'s Small Bets course. It was one of the most **transformative experiences of my life**."',
-  "Trevor O'Hara: \"Proud to say I'm a graduate of the very first cohort! **Definitely worth it**.\"",
-  'Andreas Lehr: "I joined the Small Bets course by @dvassallo in April and can highly recommend it. The content is really great and inspiring. The outstanding part is the Discord community which is very active --- you get **lots if inspiration** just by consuming the participants content alone."',
-  'Aaron Batilo: "Just launched my first small bet after being in this community. The lessons learned gave me **much more confidence** about taking risks and investing my time."',
-  'Haifa Altwaijry: "The gift that keeps on giving. **You\'ll never regret signing up**!"',
-  'Daniel Rojas: "This is **an awesome community**, I came because of the course, stayed thanks to the community."',
-  'Alex Konewko: "So refreshing to hear such **authentic and insightful content** being shared with an interesting and diverse cohort. Highly recommended!"',
-  'Vineet Thanedar: "There is **no better community of solopreneurs** on the internet."',
-  'Mike Ying: "**Great quality classes**."',
-  'Mark Willis Borum: "**Worth 10x the cost**."',
-  'Lila Tace: "Small Bets is magical. **I found my place**."',
-  'Nick Groeneveld: "Can highly recommend Small Bets. It is **the best investment in my career** I made. Connected with great people. Joined insightful master classes. Made over 8x the entrance fee on new projects."',
-  'David Nix: "If you are even a teeny-tiny bit interested in entrepreneurship, **you need this**."',
-  "Alberto Sadde: \"**One of the best communities** I'm part of. The events are top notch and even if I'm often unable to join the live session, recordings are always available.\"",
-  'Paul Waweru: "**Best investment I\'ve made**!"',
-  'Dave Kang: "This is the most interesting entrepreneurial community I\'m part of, **smart people** making a living off the corporate grid."',
-  "Milly Barker: \"Watching just 6 hours of @dvassallo's Small Bets Fundamentals Zoom recordings has done me more good than 3+ years of striving to figure things out myself. **Gratitude doesn't even come close**.\"",
-  'Denis Loginoff: "Went to a potentially **life-changing** lecture by @LBacaj in Small Bets! It made me rethink my entire strategy on side income."',
-  'Matouš Jemelka: "Insane February line-up of events at @SmallBetsDotCom. Wonderful guests riffing on fascinating topics. I am especially looking forward to @jdnoc and @stephsmithio, but the overall **bar is extremely high**."',
-  'Anton Cherkasov: "I joined Small Bets last week, although I haven\'t had much time to explore. Nevertheless, through just a few chats, I have already gained valuable insights. The community of amazing people is **truly incredible**."',
-  'Venkatesh Narayanan: "Worth joining small bets and try out new things. The guest lectures **recordings are fantastic**."',
-  'Kunal Modi: "Thanks to @dvassallo\'s small bets course and its **amazing community**, I got the jumpstart that would have otherwise taken me ages to figure out on my own."',
-  'Greg Gilbert: "I rarely recommend products publicly, but the Small Bets community offers **incredible value for the price**."',
+  {
+    name: "Arvid Kahl",
+    quote:
+      "This isn't just an **amazing community** for eager founders to learn in; it's also an expression of Daniel's expansive teaching mindset. Allowing people to teach themselves by re-living your past lectures is an active act of empowering those who already have an overflowing schedule.",
+  },
+  {
+    name: "Florin Pop",
+    quote:
+      "There are **tons of webinars with amazing people**, and the community is full of amazing people.",
+  },
+  {
+    name: "Tony Dinh",
+    quote: "Small Bets is **the most active server** on my Discord!",
+  },
+  {
+    name: "Espree Devora",
+    quote:
+      "Small Bets is the most high value engaged helpful business community on the internet. We pay a one time small fee for life time access to **quality connections and impactful education that transforms** our lives.",
+  },
+  {
+    name: "Kenny Liu",
+    quote:
+      "I just finished the Small Bets lecture about Upwork with @SeanODowd15. **Countless gems for takeaway!** @dvassallo and his team continue to provide real value for the Small Bets community. So glad I signed up!",
+  },
+  {
+    name: "Ergest Xheblati",
+    quote:
+      "Honestly the best community I've been a part of in the last 10 years",
+  },
+  {
+    name: "Aprilynne Alter",
+    quote:
+      "I can easily say that the Small Bets community has been **one of the most engaged groups of people** I've had the pleasure of teaching! Great community there.",
+  },
+  {
+    name: "Hassan Osman",
+    quote:
+      "This course by @dvassallo will show you: How to think about starting a business; How to reduce the risk of failure; How to use randomness to your advantage. **Truly one of the best courses I've taken**.",
+  },
+  {
+    name: "Dan Rowden",
+    quote:
+      "The Discord is **full of amazing makers**. It's like a curated group of the best from Twitter, plus more interaction and value.",
+  },
+  {
+    name: "Vic Vijayakumar",
+    quote:
+      "You get an active community Discord, lots of guest lectures (with recordings), tons of freebies (and/or discounts to various saas / ebooks / courses), and in my case I also **made some very good friends**.",
+  },
+  {
+    name: "Monica Lim",
+    quote:
+      "You don't need another course but this by @dvassallo legit freed me from self-sabotage and procrastination. It's **value dense**, affordable and the community is still small and quite active.",
+  },
+  {
+    name: "Manny de Souza",
+    quote:
+      "By far, the best content I consumed about entrepreneurship and lifestyle. It is amazing to be **among of so many like minded people**.",
+  },
+  {
+    name: "Jeffrey Guenther",
+    quote:
+      "**Absolutely worth the price** of admission. It's like having access to a bunch of paid courses.",
+  },
+  {
+    name: "Ankur Tyagi",
+    quote:
+      "If you're looking for an awesome community. If you're trying small bets and need **genuine feedback**. If you need to understand how randomness played a big role in your life. This is for you.",
+  },
+  {
+    name: "Jeremy Smith",
+    quote:
+      "Daniel is solidifying many concepts I had some intuition/pattern matching for, but couldn't yet articulate. **Highly recommended**!",
+  },
+  {
+    name: "George McEntegart",
+    quote: "A community that **keeps giving value again and again**.",
+  },
+  {
+    name: "Ankita Kulkarni",
+    quote:
+      "**Highly recommend it**, you start thinking in small bets vs taking on huge projects which cost you time and money!",
+  },
+  {
+    name: "Rafael Rinaldi",
+    quote: "This community truly is **the gift that keeps on giving**.",
+  },
+  {
+    name: "Jordan Davis",
+    quote:
+      "Very few one-time purchases continue to add more and **more value over time** like this.",
+  },
+  {
+    name: "Brock Briggs",
+    quote: "The community is **absolutely invaluable**.",
+  },
+  {
+    name: "Brandon Fearing",
+    quote:
+      "Joined @dvassallo small bets community yesterday and the guest lecture recordings are 100%. Found @searchbound's domain first development **super intriguing**. Maybe now I can put my 40+ unused domains to use!",
+  },
+  {
+    name: "Hugo Hamel",
+    quote:
+      "It is so **refreshing and inspiring** to be part of the Small Bets community. It might be bad for the economy, but it's extremely healing in many ways to experience. Truly a beautiful community!",
+  },
+  {
+    name: "Nick Hammond",
+    quote:
+      "Love being able to go back into the recordings on my own time. Appreciate **all of the info you've collected in one place**!",
+  },
+  {
+    name: "Angad Singi",
+    quote:
+      "Being a part of smallbets.co, I love the community. The instant feedback, **quality conversations**, and exploring possibilities of digital business is superb.",
+  },
+  {
+    name: "Corey Wilks",
+    quote:
+      "Shared the same wins in a few communities recently. **Nothing beats the supportiveness** of the Small Bets community.",
+  },
+  {
+    name: "Shivam Dewan",
+    quote:
+      "smallbets.co is my **new idea generator**. If you need inspiration and a supportive community, this is the place to be. Been into so many discord groups but only this one I actually participate in.",
+  },
+  {
+    name: "Travis Hayes",
+    quote:
+      "Highly recommend looking into Daniel's small bets community. As a new active twitter user, I often have a ton of questions. **The community is engaged** and has been helpful.",
+  },
+  {
+    name: "Miche Priest",
+    quote:
+      "Taking this course and joining this Discord has been an incredible learning journey. Top notch, creative, generous, engaged people coming together to figure out how to design work around life. **Makings solopreneurship not so solo**.",
+  },
+  {
+    name: "Enrique Benitez",
+    quote:
+      "Just finished this course by @dvassallo and it's by far **the best course I've ever taken**, Daniel explains and dissects the process of building a portfolio of small bets thoroughly, from product ideas, randomness and luck, making money and lifestyle design.",
+  },
+  {
+    name: "Jason Akinaka",
+    quote:
+      "**Highly recommend** it for those who, like me, dread the 9-5 and have way too many interests to ever want to go back.",
+  },
+  {
+    name: "Takamichi Okubo",
+    quote:
+      "Just finished @dvassallo's awesome cohort course. It's 9+ hours of **pure informativeness and inspiration**.",
+  },
 ];
 
 const formatTestimonial = (text) => {
-  return text.replace(/\*\*(.*?)\*\*/g, '<span class="highlight">$1</span>');
+  return text.replace(
+    /\*\*(.*?)\*\*/g,
+    '<span class="bg-secondary-200 px-1 font-bold">$1</span>',
+  );
 };
+
+const showAllTestimonials = ref(false);
+const toggleShowAllTestimonials = () => {
+  showAllTestimonials.value = !showAllTestimonials.value;
+};
+
+const showAllCourses = ref(false);
+const displayedCourses = computed(() => {
+  return showAllCourses.value ? courses : courses.slice(0, 12);
+});
+
+const toggleShowAllCourses = () => {
+  showAllCourses.value = !showAllCourses.value;
+};
+
+const experts = [
+  {
+    name: "Daniel Vassallo",
+    expertise: "Small Bets Strategy",
+    avatar: "/experts/daniel.jpg",
+  },
+  {
+    name: "Arvid Kahl",
+    expertise: "Media Business",
+    avatar: "/experts/arvid.jpg",
+  },
+  {
+    name: "Jordan O'Connor",
+    expertise: "SEO Specialist",
+    avatar: "/experts/jordan.jpg",
+  },
+  {
+    name: "Monica Lim",
+    expertise: "Notion Expert",
+    avatar: "/experts/monica.jpg",
+  },
+  {
+    name: "Sahil Lavingia",
+    expertise: "Crowdfunding",
+    avatar: "/experts/sahil.jpg",
+  },
+  {
+    name: "Espree Devora",
+    expertise: "Podcasting",
+    avatar: "/experts/espree.jpg",
+  },
+  {
+    name: "Steph Smith",
+    expertise: "Internet Marketing",
+    avatar: "/experts/steph.jpg",
+  },
+  {
+    name: "Hassan Osman",
+    expertise: "Course Creation",
+    avatar: "/experts/hassan.jpg",
+  },
+  {
+    name: "Sairam Sundaresan",
+    expertise: "AI & GPT",
+    avatar: "/experts/sairam.jpg",
+  },
+  {
+    name: "Peter Askew",
+    expertise: "Domain Development",
+    avatar: "/experts/peter.jpg",
+  },
+];
+
+const benefits = [
+  "Access to 45+ courses and workshops (worth $4,500+)",
+  "Active Discord community with 6,500+ members",
+  "Direct access to successful entrepreneurs",
+  "Weekly live workshops and Q&A sessions",
+  "All future courses and content at no extra cost",
+  "Accountability groups to help you stay on track",
+  "Early access to new tools and resources",
+  "A supportive network to validate your ideas",
+];
 </script>

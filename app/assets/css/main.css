@@ -1,14 +1,10 @@
 @import "tailwindcss" theme(static);
 @import "@nuxt/ui";
 
-.highlight {
-  color: var(--color-amaranth-600);
-  font-weight: 600;
-}
-
 @theme static {
-  --font-serif: "Manrope", serif;
+  --font-serif: "Rubik", serif;
   --font-sans: "Parkinsans", sans-serif;
+  --font-logo: "Rubik", sans-serif;
 
   --color-cod-50: #fbf4f5;
   --color-cod-100: #f5e9eb;
@@ -57,4 +53,8 @@
   --color-fall-800: #744d2c;
   --color-fall-900: #604127;
   --color-fall-950: #362212;
+}
+
+.section-title {
+  @apply text-3xl lg:text-5xl uppercase font-serif font-medium mb-12;
 }

@@ -11,5 +11,5 @@ export default defineNuxtConfig({
     compatibilityVersion: 4
   },
 
-  modules: ['@nuxt/fonts', '@nuxt/icon', '@nuxt/ui']
+  modules: ['@nuxt/fonts', '@nuxt/icon', '@nuxt/ui', '@nuxt/image']
 })
