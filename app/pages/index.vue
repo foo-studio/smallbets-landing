@@ -130,7 +130,7 @@
           <div
             v-for="expert in experts"
             :key="expert.name"
-            class="bg-secondary-100 rounded-xl overflow-hidden border border-secondary-300 text-center flex flex-col items-center"
+            class="bg-secondary-50 rounded-xl overflow-hidden border border-secondary-300 text-center flex flex-col items-center"
           >
             <div class="w-full mb-4 flex items-center justify-center pt-4">
               <UAvatar
@@ -138,7 +138,7 @@
                 :src="expert.avatar"
                 :alt="expert.name"
                 size="xl"
-                class="h-20 w-20"
+                class="size-36"
               />
               <UAvatar v-else :alt="expert.name" size="xl" class="h-20 w-20">
                 {{ expert.name.charAt(0) }}
@@ -214,17 +214,9 @@
         </p>
 
         <div class="max-w-2xl">
-          <div
-            class="bg-secondary-50 rounded-2xl overflow-hidden ring-2 ring-secondary-300"
-          >
-            <div class="border-b-2 border-secondary-300 py-6 px-8">
-              <h3 class="text-2xl font-bold">Small Bets Lifetime Membership</h3>
-              <div class="mt-2 mb-1 text-4xl font-bold">$129</div>
-              <p class="">One-time payment.</p>
-            </div>
-
-            <div class="p-8">
-              <ul class="space-y-4 text-secondary-600">
+          <div>
+            <div>
+              <ul class="space-y-4">
                 <li
                   v-for="(benefit, index) in benefits"
                   :key="index"
@@ -240,12 +232,13 @@
                   :to="joinNow"
                   size="xl"
                   variant="subtle"
+                  color="primary"
                   class="w-full hover:ring-2 md:w-auto font-bold py-4 px-8 text-lg"
                   trailing-icon="i-heroicons-arrow-right-16-solid"
                 >
                   Join Small Bets Now
                 </UButton>
-                <p class="mt-4 text-sm text-secondary-700">
+                <p class="mt-2 text-sm">
                   Join {{ members }} other members building small bets.
                 </p>
               </div>

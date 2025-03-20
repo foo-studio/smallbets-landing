@@ -3,6 +3,7 @@ export default defineAppConfig({
     colors: {
       primary: "amaranth",
       secondary: "pelorous",
+      warning: "fall",
     },
   },
   links: {
