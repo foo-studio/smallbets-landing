@@ -1,0 +1,7 @@
+@import "tailwindcss" theme(static);
+@import "@nuxt/ui";
+
+@theme static {
+  --font-serif: "Lora", serif;
+  --font-sans: "Montserrat", sans-serif;
+}
