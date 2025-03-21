@@ -125,30 +125,27 @@
         </p>
 
         <div
-          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6"
+          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 md:gap-6"
         >
           <div
             v-for="expert in experts"
             :key="expert.name"
-            class="bg-secondary-50 rounded-xl overflow-hidden border border-secondary-300 text-center flex flex-col items-center"
+            class="bg-secondary-50 p-2 md:py-4 gap-4 rounded-xl overflow-hidden border border-secondary-300 md:text-center flex md:flex-col items-center"
           >
-            <div class="w-full mb-4 flex items-center justify-center pt-4">
+            <div class="flex items-center justify-center">
               <UAvatar
                 v-if="expert.avatar"
                 :src="expert.avatar"
                 :alt="expert.name"
                 size="xl"
-                class="size-36"
+                class="size-20 md:size-30 lg:size-36"
               />
-              <UAvatar v-else :alt="expert.name" size="xl" class="h-20 w-20">
-                {{ expert.name.charAt(0) }}
-              </UAvatar>
             </div>
-            <div class="pb-4">
+            <div>
               <h3 class="font-bold text-xl text-secondary-950">
                 {{ expert.name }}
               </h3>
-              <p class="text-md text-secondary-700 mt-1">
+              <p class="text-md text-secondary-700">
                 {{ expert.expertise }}
               </p>
             </div>
@@ -160,10 +157,13 @@
     <!-- Library Section -->
     <section class="py-16 md:py-24">
       <UContainer>
-        <h2 class="section-title">
-          Access Our Library of
-          <span class="bg-primary-200 font-bold px-2"
-            >{{ courses.length }}+ Courses</span
+        <h2 class="section-title space-x-1">
+          <span> Access Our Library of </span>
+          <span
+            class="inline-block -rotate-1 bg-primary-200 font-bold px-2 py-1"
+            ><span class="inline-block rotate-1"
+              >{{ courses.length }}+ Courses</span
+            ></span
           >
         </h2>
         <p class="text-xl mb-12 max-w-3xl">
@@ -173,25 +173,18 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
           <div
-            v-for="(course, index) in displayedCourses"
+            v-for="(course, index) in courses"
             :key="index"
-            class="bg-secondary-100/70 ring-2 ring-secondary-400 text-black p-2 rounded-lg flex items-center gap-1"
+            class="bg-secondary-100/70 md:items-center ring-2 ring-secondary-400 text-black py-1 px-2 rounded-lg flex gap-1"
           >
-            <UIcon name="i-heroicons-chevron-right-16-solid" class="text-lg" />
+            <div class="flex md:items-center pt-1 md:pt-0">
+              <UIcon
+                name="i-heroicons-chevron-right-16-solid"
+                class="text-lg"
+              />
+            </div>
             <p class="font-medium text-secondary-900">{{ course }}</p>
           </div>
-        </div>
-
-        <div v-if="!showAllCourses" class="py-4">
-          <UButton
-            variant="link"
-            color="secondary"
-            size="lg"
-            class="px-0 cursor-pointer underline font-medium"
-            @click="toggleShowAllCourses"
-          >
-            {{ showAllCourses ? "Show Less Courses" : "Show All Courses" }}
-          </UButton>
         </div>
       </UContainer>
     </section>
@@ -205,9 +198,11 @@
     <!-- Pricing / Lifetime Membership Section -->
     <section class="py-16 md:py-24 bg-fall-50">
       <UContainer>
-        <h2 class="section-title">
-          One-Time Payment,
-          <span class="bg-fall-200 font-bold px-2">Lifetime Access</span>
+        <h2 class="section-title space-x-2">
+          <span> One-Time Payment,</span>
+          <span class="inline-block -rotate-1 bg-fall-200 font-bold py-1 px-2"
+            ><span class="inline-block rotate-1">Lifetime Access</span></span
+          >
         </h2>
         <p class="text-xl mb-12">
           No monthly fees, no upsells, just pure value that keeps growing.
@@ -220,9 +215,11 @@
                 <li
                   v-for="(benefit, index) in benefits"
                   :key="index"
-                  class="flex items-center gap-2"
+                  class="flex md:items-center gap-2"
                 >
-                  <UIcon class="text-2xl" name="i-heroicons-check-circle" />
+                  <div class="flex md:items-center pt-1 md:pt-0">
+                    <UIcon class="text-2xl" name="i-heroicons-check-circle" />
+                  </div>
                   <span class="text-lg">{{ benefit }}</span>
                 </li>
               </ul>
@@ -258,7 +255,7 @@
           </div>
           <div class="text-fall-950">
             © {{ new Date().getFullYear() }} Small Bets — Make money without
-            risking it all
+            risking it all.
           </div>
         </div>
       </UContainer>
@@ -495,15 +492,6 @@ const toggleShowAllTestimonials = () => {
   showAllTestimonials.value = !showAllTestimonials.value;
 };
 
-const showAllCourses = ref(false);
-const displayedCourses = computed(() => {
-  return showAllCourses.value ? courses : courses.slice(0, 12);
-});
-
-const toggleShowAllCourses = () => {
-  showAllCourses.value = !showAllCourses.value;
-};
-
 const experts = [
   {
     name: "Daniel Vassallo",
@@ -517,7 +505,7 @@ const experts = [
   },
   {
     name: "Jordan O'Connor",
-    expertise: "SEO Specialist",
+    expertise: "Audience Building & SEO",
     avatar: "https://i.pravatar.cc/300?img=33",
   },
   {
