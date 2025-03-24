@@ -268,6 +268,13 @@ definePageMeta({
   colorMode: "light",
 });
 
+useSeoMeta({
+  title: 'Small Bets: Build a Portfolio of Profitable Projects',
+  ogTitle: 'Small Bets: Build a Portfolio of Profitable Projects',
+  description: 'Join a community of solopreneurs and learn how to build profitable online projects. Access 45+ courses, expert advice, and a supportive network.',
+  ogDescription: 'Join a community of solopreneurs and learn how to build profitable online projects. Access 45+ courses, expert advice, and a supportive network.',
+})
+
 const { signIn, joinNow } = useAppConfig().links;
 
 // TODO: fetch this with an API?
